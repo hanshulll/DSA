@@ -5,7 +5,7 @@ class Solution {
             time[position[i]] = (float) (target-position[i])/speed[i];
         }
         int count = 0;
-        float prevTime = time[target];
+        float prevTime = 0;
         for(int i = time.length-1; i>=0; i--) {
             if(prevTime<time[i]) {
                 count++;
