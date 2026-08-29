@@ -5,10 +5,10 @@ class Solution {
             freq.put(position[i], i);
         }
         int ans = 0;
-        double prevTime = 0;
+        float prevTime = 0;
         Arrays.sort(position);
         for (int i = position.length - 1; i >= 0; i--) {
-            double curTime = 1.0 * (target - position[i]) / speed[freq.get(position[i])];
+            float curTime = (float)(target - position[i]) / speed[freq.get(position[i])];
             if (curTime > prevTime) {
                 ans++;
                 prevTime = curTime;
