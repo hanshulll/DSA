@@ -1,19 +1,17 @@
 class Solution {
     public int carFleet(int target, int[] position, int[] speed) {
-        Map<Integer, Integer> freq = new HashMap<>();
-        for (int i = 0; i < position.length; i++) {
-            freq.put(position[i], i);
+        float[] time = new float[target+1];
+        for(int i = 0; i<position.length; i++) {
+            time[position[i]] = (float) (target-position[i])/speed[i];
         }
-        int ans = 0;
-        float prevTime = 0;
-        Arrays.sort(position);
-        for (int i = position.length - 1; i >= 0; i--) {
-            float curTime = (float)(target - position[i]) / speed[freq.get(position[i])];
-            if (curTime > prevTime) {
-                ans++;
-                prevTime = curTime;
+        int count = 0;
+        float prevTime = time[target];
+        for(int i = time.length-1; i>=0; i--) {
+            if(prevTime<time[i]) {
+                count++;
+                prevTime=time[i];
             }
         }
-        return ans;
+        return count;
     }
 }
