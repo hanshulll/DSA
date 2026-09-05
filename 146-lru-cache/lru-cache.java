@@ -24,8 +24,8 @@ class LRUCache {
             cache.put(key,value);
         } else {
             if(cache.size()==capacity) {
-                for(Map.Entry<Integer,Integer> e : cache.entrySet()) {
-                    cache.remove(e.getKey());
+                for(Integer e : cache.keySet()) {
+                    cache.remove(e);
                     break;
                 }
             }
