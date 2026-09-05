@@ -1,71 +1,35 @@
 class LRUCache {
 
-    Map<Integer, Node> cache;
-    Node head;
-    Node tail;
+    Map<Integer,Integer> cache;
     int capacity;
-
+    
     public LRUCache(int capacity) {
-        this.cache = new HashMap<>();
-        head = new Node();
-        tail = new Node();
-        head.prev = tail;
-        tail.next = head;
-        this.capacity = capacity;
+        cache=new LinkedHashMap<>();
+        this.capacity=capacity;
     }
-
+    
     public int get(int key) {
         int val = -1;
-        if (cache.containsKey(key)) {
-            Node node = cache.get(key);
-            val = node.val;
-            this.remove(node);
-            this.add(node);
+        if(cache.containsKey(key)) {
+            val=cache.get(key);
+            cache.remove(key);
+            cache.put(key,val);
         }
         return val;
     }
-
+    
     public void put(int key, int value) {
-        if (cache.containsKey(key)) {
-            Node node = this.cache.get(key);
-            this.remove(node);
-            node.val = value;
-            this.add(node);
+        if(cache.containsKey(key)) {
+            cache.remove(key);
+            cache.put(key,value);
         } else {
-            if (cache.size() == capacity) {
-                Node node = head.prev;
-                this.remove(node);
-                cache.remove(node.key);
+            if(cache.size()==capacity) {
+                for(Map.Entry<Integer,Integer> e : cache.entrySet()) {
+                    cache.remove(e.getKey());
+                    break;
+                }
             }
-            Node node = new Node();
-            node.key = key;
-            node.val = value;
-            this.add(node);
-            cache.put(key, node);
-        }
-    }
-
-    private void add(Node node) {
-        Node next = tail.next;
-        node.prev = tail;
-        tail.next = node;
-        node.next = next;
-        next.prev = node;
-    }
-
-    private void remove(Node node) {
-        Node next = node.next, prev = node.prev;
-        prev.next = next;
-        next.prev = prev;
-    }
-
-    class Node {
-        int key;
-        int val;
-        Node prev;
-        Node next;
-
-        Node() {
+            cache.put(key,value);
         }
     }
 }
@@ -73,6 +37,6 @@ class LRUCache {
 /**
  * Your LRUCache object will be instantiated and called as such:
  * LRUCache obj = new LRUCache(capacity);
- * int param_1 = obj.get(key);
  * obj.put(key,value);
+ * int param_1 = obj.get(key);
  */
