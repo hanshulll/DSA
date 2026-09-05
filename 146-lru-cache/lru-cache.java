@@ -1,35 +1,35 @@
 class LRUCache {
 
-    Map<Integer,Integer> cache;
+    Map<Integer, Integer> cache;
     int capacity;
-    
+
     public LRUCache(int capacity) {
-        cache=new LinkedHashMap<>();
-        this.capacity=capacity;
+        cache = new LinkedHashMap<>();
+        this.capacity = capacity;
     }
-    
+
     public int get(int key) {
         int val = -1;
-        if(cache.containsKey(key)) {
-            val=cache.get(key);
+        if (cache.containsKey(key)) {
+            val = cache.get(key);
             cache.remove(key);
-            cache.put(key,val);
+            cache.put(key, val);
         }
         return val;
     }
-    
+
     public void put(int key, int value) {
-        if(cache.containsKey(key)) {
+        if (cache.containsKey(key)) {
             cache.remove(key);
-            cache.put(key,value);
+            cache.put(key, value);
         } else {
-            if(cache.size()==capacity) {
-                for(Integer e : cache.keySet()) {
+            if (cache.size() == capacity) {
+                for (Integer e : cache.keySet()) {
                     cache.remove(e);
                     break;
                 }
             }
-            cache.put(key,value);
+            cache.put(key, value);
         }
     }
 }
