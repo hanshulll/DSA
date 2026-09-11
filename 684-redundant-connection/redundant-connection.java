@@ -2,11 +2,9 @@ class Solution {
     public int[] findRedundantConnection(int[][] edges) {
         Dsu d = new Dsu(edges.length + 1);
         for (int i = 0; i < edges.length; i++) {
-            // for(int j = 0; j<edges[i].length; j++) {
             if (d.union(edges[i][0], edges[i][1])) {
                 return new int[] { edges[i][0], edges[i][1] };
             }
-            // }
         }
         return new int[] {};
     }
